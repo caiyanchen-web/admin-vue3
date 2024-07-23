@@ -1,6 +1,6 @@
 import {createRouter,createWebHistory} from 'vue-router'
 
-/**
+/*
  * 路由表
  */
 const router = createRouter({

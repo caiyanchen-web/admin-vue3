@@ -12,6 +12,12 @@ import router from './router/router'
 
 //导入全局样式
 import '@/styles/index.scss'
+
+//输出环境
+console.log("环境地址为：",import.meta.env.VITE_APP_ENV)
+console.log("baseURL地址为：",import.meta.env.VITE_APP_BASE_API)
+
+
 // app实例
 const app = createApp(App)
 // 使用router路由
