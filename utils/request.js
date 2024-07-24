@@ -12,7 +12,7 @@ const service = axios.create({
   },
 })
 //核心函数
-function request(options){
+const request=(options)=>{
     options.method = options.method || 'get'
     if(options.method.toLowerCase() === 'get'){
         options.params=options.data
