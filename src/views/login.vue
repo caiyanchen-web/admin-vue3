@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" :rules="rules" :model="loginForm" ref="rstForm">
+    <el-form class="login-form" :rules="rules" :model="loginForm" ref="loginFormRef">
       <!--标题-->
       <div class="title-container">博客运行后台</div>
       <el-form-item style="margin-bottom: 30px" prop="username">
@@ -32,7 +32,7 @@
       </el-form-item>
       <el-row class="button-cs">
         <!--登陆按钮-->
-        <el-button type="primary" style="width: 100px" @click="printLogin">登陆</el-button>
+        <el-button type="primary" style="width: 100px" @click="HandleLogin">登陆</el-button>
         <el-button type="warning" style="width: 100px">重置</el-button>
       </el-row>
     </el-form>
@@ -41,14 +41,10 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref,getCurrentInstance} from 'vue'
 import {Hide, Lock, View} from "@element-plus/icons-vue";
-import {ElForm} from 'element-plus';
+import  {ElForm} from 'element-plus';
 
-const loginForm = ref({
-  username: '',
-  password: ''
-})
 //表单验证
 const rules = {
   username: [{required: true, message: "请输入用户名", trigger: "blue"}],
@@ -62,12 +58,23 @@ const changeView = () => {
   flag.value = !flag.value
   flagType.value = flag.value ? "password" : "text"
 }
-const printLogin = () => {
-  console.log(loginForm.value.username, "_______", loginForm.value.password)
+//登陆
+const {proxy} = getCurrentInstance()
+const loginForm = ref({})
+const loginFormRef = ref()
+const HandleLogin = () => {
+  loginFormRef.value.validity(valid =>{
+    if (!valid) return
+    proxy.$api.login(loginForm.value).then(res =>{
+      console.log("请求的相应数据：",res)
+    }).catch(err =>{
+      console.log(err)
+    })
+  })
 }
 //重置
 </script>
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .login-container {
   background-color: skyblue;
   height: 100%;

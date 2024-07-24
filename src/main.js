@@ -12,7 +12,8 @@ import router from './router/router'
 
 //导入全局样式
 import '@/styles/index.scss'
-
+//api
+import api from './api'
 //输出环境
 console.log("环境地址为：",import.meta.env.VITE_APP_ENV)
 console.log("baseURL地址为：",import.meta.env.VITE_APP_BASE_API)
@@ -29,5 +30,6 @@ app.use(ElementPlus)
 for(const [key,component ] of Object.entries(ElementPlusIconsVue)){
     app.component(key,component)
 }
-
+//配置api
+app.config.globalProperties.$api = api
 app.mount('#app')
